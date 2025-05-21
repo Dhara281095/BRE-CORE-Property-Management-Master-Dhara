@@ -23,7 +23,7 @@ pageextension 50508 SalesCreditMemo extends "Sales Credit Memo"
                             Rec."Contract Tenure" := tenancyContract."Contract Tenor";
                             Rec."Contract Period" := Format(tenancyContract."Contract Start Date", 0, '<Day,2>/<Month,2>/<Year4>') + ' To ' + Format(tenancyContract."Contract End Date", 0, '<Day,2>/<Month,2>/<Year4>');
                             Rec."Property Classification" := tenancyContract."Property Classification";
-                            Rec."Contract Amount" := tenancyContract."Annual Rent Amount";
+                            Rec."Contract Amount" := Round(tenancyContract."Annual Rent Amount");
                         end else begin
                             Rec."Tenant Name" := '';
                             rec."Property Name" := '';

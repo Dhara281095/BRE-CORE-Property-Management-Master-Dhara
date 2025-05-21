@@ -1,0 +1,37 @@
+{
+  "id": "8850de6a-1fd6-45b7-9603-48159d7c2d7c",
+  "name": "Property-RealEstate",
+  "publisher": "Default Publisher",
+  "version": "1.0.0.0",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [{
+    "id": "d428365a-d3cf-41bd-a230-0e7c93943ec6",
+    "name": "Core-RealEstate",
+    "publisher": "Default Publisher",
+    "version": "1.0.0.0"
+  }],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "26.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50999
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "runtime": "15.0",
+  "features": [
+    "NoImplicitWith"
+  ]
+}

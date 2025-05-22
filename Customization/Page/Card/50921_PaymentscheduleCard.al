@@ -49,6 +49,7 @@ page 50921 "Payment Schedule Card"
                 {
                     ApplicationArea = All;
                     Caption = 'Contract Status';
+                    Editable = false;
                 }
                 field("Contract Start date"; Rec."Contract Start date")
                 {

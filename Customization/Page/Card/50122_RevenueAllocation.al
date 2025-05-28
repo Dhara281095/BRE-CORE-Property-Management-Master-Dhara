@@ -205,7 +205,7 @@ page 50122 "Revenue Allocation Card"
                     if Approvalrevenueallocation.FindSet() then begin
                         // Modify existing approval record
                         Approvalrevenueallocation."ID" := Rec."No.";
-                        Approvalrevenueallocation."Month" := revenueallocation."Month";
+                        Approvalrevenueallocation."Month" := Rec."Month";
                         Approvalrevenueallocation."Financial Year" := Rec."Financial Year";
                         Approvalrevenueallocation."Status" := revenueallocation."Status";
                         Approvalrevenueallocation.Modify();
@@ -215,7 +215,7 @@ page 50122 "Revenue Allocation Card"
                         Approvalrevenueallocation.Init();
                         Approvalrevenueallocation."ID" := Rec."No.";
                         Approvalrevenueallocation."Financial Year" := Rec."Financial Year";
-                        Approvalrevenueallocation."Month" := revenueallocation."Month";
+                        Approvalrevenueallocation."Month" := Rec."Month";
                         Approvalrevenueallocation."Status" := revenueallocation."Status";
 
                         Approvalrevenueallocation.Insert();
@@ -400,18 +400,21 @@ page 50122 "Revenue Allocation Card"
     //---------------Insert Allocation Line--------------//
 
     // Helper procedure to insert allocation line
+
+    // Modified InsertAllocationLine procedure with grace period date check
+    // Modified InsertAllocationLine procedure with grace period date check
     procedure InsertAllocationLine(
-   ContractRec: Record "Tenancy Contract";
-   MultiYearStartDate: Date;
-   MultiYearEndDate: Date;
-   NoOfDays: Integer;
-   PerDayRent: Decimal;
-   TotalAnnualAmount: Decimal;
-   OwnerShareAmount: Decimal;
-   TerminationDate: Date;
-   LineNo: Integer;
-   MonthNo: Integer;
-   FinancialYear: Integer)
+     ContractRec: Record "Tenancy Contract";
+     MultiYearStartDate: Date;
+     MultiYearEndDate: Date;
+     NoOfDays: Integer;
+     PerDayRent: Decimal;
+     TotalAnnualAmount: Decimal;
+     OwnerShareAmount: Decimal;
+     TerminationDate: Date;
+     LineNo: Integer;
+     MonthNo: Integer;
+     FinancialYear: Integer)
     var
         FilteredContractRec: Record "Revenue Allocation SubGrid";
         SuspensionRec: Record SuspendReasonTable;
@@ -760,20 +763,21 @@ page 50122 "Revenue Allocation Card"
     end;
 
     // Helper procedure to insert missed allocation lines
+    // Helper procedure to insert missed allocation lines
     procedure InsertMissedAllocationLine(
-      ContractRec: Record "Tenancy Contract";
-      MultiYearStartDate: Date;
-      MultiYearEndDate: Date;
-      NoOfDays: Integer;
-      PerDayRent: Decimal;
-      TotalAnnualAmount: Decimal;
-      OwnerShareAmount: Decimal;
-      TerminationDate: Date;
-      LineNo: Integer;
-      PreviousMonthNo: Integer;
-      PreviousYearNo: Integer;
-      ContractStartDate: Date;
-      PreviousMonthEnd: Date)
+     ContractRec: Record "Tenancy Contract";
+     MultiYearStartDate: Date;
+     MultiYearEndDate: Date;
+     NoOfDays: Integer;
+     PerDayRent: Decimal;
+     TotalAnnualAmount: Decimal;
+     OwnerShareAmount: Decimal;
+     TerminationDate: Date;
+     LineNo: Integer;
+     PreviousMonthNo: Integer;
+     PreviousYearNo: Integer;
+     ContractStartDate: Date;
+     PreviousMonthEnd: Date)
     var
         FilteredContractRec: Record "Revenue Allocation SubGrid";
         SuspensionRec: Record SuspendReasonTable;

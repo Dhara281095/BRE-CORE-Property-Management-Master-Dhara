@@ -10,27 +10,51 @@ page 50505 "Azure Configuration"
     {
         area(Content)
         {
-            group(GroupName)
+            group(General)
             {
-                Caption = 'General Information';
-                field(Id; Rec.Id)
+                Caption = 'Azure Storage Configuration';
+
+                field("Storage Account Name"; Rec."Storage Account Name")
                 {
                     ApplicationArea = All;
-                    Editable = false;
+                    ToolTip = 'Specifies the name of your Azure Storage account';
                 }
+
+                field("Default Container"; Rec."Default Container")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the default container name to use for uploads';
+                }
+
                 field("SAS URL"; Rec."SAS URL")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Enter the SAS URL here.';
-                    Editable = true;
-                    trigger OnValidate()
-                    var
-                        IsValid: Boolean;
-                    begin
-                        IsValid := ValidateURL(Rec."SAS URL");
-                        if not IsValid then
-                            Error('The entered URL is not valid. Ensure it starts with "https://" and is a properly formatted URL.');
-                    end;
+                    ToolTip = 'The SAS URL for legacy compatibility (not recommended)';
+                    Visible = false;
+                }
+            }
+
+            group("Azure AD Authentication")
+            {
+                Caption = 'Azure AD Authentication';
+
+                field("Tenant ID"; Rec."Tenant ID")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'The Azure AD Tenant ID';
+                }
+
+                field("Client ID"; Rec."Client ID")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'The Client ID (Application ID) from your Azure AD app registration';
+                }
+
+                field("Client Secret"; Rec."Client Secret")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'The Client Secret from your Azure AD app registration';
+                    ExtendedDatatype = Masked;
                 }
             }
         }
@@ -40,55 +64,56 @@ page 50505 "Azure Configuration"
     {
         area(Processing)
         {
-            action(Save)
+            action(TestConnection)
             {
-                Caption = 'Save SAS URL';
                 ApplicationArea = All;
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
+                Caption = 'Test Connection';
+                ToolTip = 'Test the connection to Azure Blob Storage';
+                Image = TestDatabase;
+
                 trigger OnAction()
+                var
+                    AzureADBlob: Codeunit "Azure AD Blob Storage";
+                    TempBlob: Codeunit "Temp Blob";
+                    InStream: InStream;
+                    OutStream: OutStream;
+                    TestFileName: Text;
+                    TestFolderName: Text;
+                    Result: Text;
                 begin
-                    Commit();
-                    Message('SAS URL saved successfully.');
+                    if not Confirm('Do you want to test the Azure connection?') then
+                        exit;
+
+                    // Create a small test file
+                    TempBlob.CreateOutStream(OutStream);
+                    OutStream.WriteText('This is a test file to validate Azure blob storage connection.');
+                    TempBlob.CreateInStream(InStream);
+
+                    TestFileName := 'connection_test_' + Format(CurrentDateTime) + '.txt';
+                    TestFileName := ConvertStr(TestFileName, ' :', '__');
+
+                    TestFolderName := 'TestFolder';
+                    // Attempt to upload test file
+                    Result := AzureADBlob.UploadDocumentToBlob(InStream, TestFileName, TestFolderName);
+
+                    if Result <> '' then
+                        Message('Connection successful! Test file uploaded to: %1', Result)
+                    else
+                        Error('Connection test failed.');
                 end;
             }
-
-
         }
     }
-
-    procedure ValidateURL(URL: Text[2048]): Boolean
-    var
-        HttpPrefix: Text[8];
-        HttpsPrefix: Text[9];
-        Position: Integer;
-    begin
-        HttpPrefix := 'http://';
-        HttpsPrefix := 'https://';
-
-        // Check for "http://" or "https://"
-        if (CopyStr(URL, 1, StrLen(HttpPrefix)) <> HttpPrefix) and
-           (CopyStr(URL, 1, StrLen(HttpsPrefix)) <> HttpsPrefix) then
-            exit(false);
-
-        // Check if there's a '.' after the protocol
-        Position := StrPos(CopyStr(URL, StrLen(HttpsPrefix) + 1), '.');
-        if Position = 0 then
-            exit(false);
-
-        exit(true);
-    end;
 
     trigger OnOpenPage()
     var
         AzureConfig: Record AzureConfiguration;
     begin
-        // Redirect to the existing record if one exists
-        if AzureConfig.FindFirst() then
-            CurrPage.SetRecord(AzureConfig);
-    end;
+        if not AzureConfig.FindFirst() then begin
+            AzureConfig.Init();
+            AzureConfig.Insert();
+        end;
 
-    var
-        myInt: Integer;
+        Rec := AzureConfig;
+    end;
 }

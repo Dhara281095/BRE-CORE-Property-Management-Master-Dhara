@@ -484,7 +484,7 @@ page 50313 "Tenancy Contract Card"
                     DrillDown = true;
                     trigger OnDrillDown()
                     var
-                        // AzureBlobUploader: Codeunit "Azure Blob Management";
+                        AzureBlobUploader: Codeunit "Azure Blob Management";
                         InStream: InStream;
                         FileName: Text;
                         SASUrlBase: Text;
@@ -1591,7 +1591,7 @@ page 50313 "Tenancy Contract Card"
                 field("Tenant Contract Status"; rec."Tenant Contract Status")
                 {
                     ApplicationArea = All;
-                    Editable = true;
+                    Editable = false;
 
                     trigger OnValidate()
                     var
@@ -2140,6 +2140,7 @@ page 50313 "Tenancy Contract Card"
     // begin
     //     if Rec."Security Deposit Amount" = Rec."Balance Amount" then
     //         Rec."Security Amount Received" := 0
+
     //     else
     //         Rec."Security Amount Received" := Rec."Security Deposit Amount" - Rec."Balance Amount";
     // end;

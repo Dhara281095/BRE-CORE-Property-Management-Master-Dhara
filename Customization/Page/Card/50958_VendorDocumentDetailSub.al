@@ -15,6 +15,7 @@ page 50958 "Vendor Document Sub"
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    Visible = false;
                 }
 
                 field("Document Type"; Rec."Document Type")
@@ -40,7 +41,7 @@ page 50958 "Vendor Document Sub"
 
                     trigger OnDrillDown()
                     var
-                        // AzureBlobUploader: Codeunit "Azure Blob Management";
+                        AzureBlobUploader: Codeunit "Azure Blob Management";
                         InStream: InStream;
                         FileName: Text;
                         SASUrlBase: Text;

@@ -41,7 +41,7 @@ page 50958 "Vendor Document Sub"
 
                     trigger OnDrillDown()
                     var
-                        AzureBlobUploader: Codeunit "Azure Blob Management";
+                        AzureBlobUploader: Codeunit "Azure AD Blob Storage";
                         InStream: InStream;
                         FileName: Text;
                         SASUrlBase: Text;

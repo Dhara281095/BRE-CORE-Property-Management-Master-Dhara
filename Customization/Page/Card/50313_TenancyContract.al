@@ -484,7 +484,7 @@ page 50313 "Tenancy Contract Card"
                     DrillDown = true;
                     trigger OnDrillDown()
                     var
-                        AzureBlobUploader: Codeunit "Azure Blob Management";
+                        AzureBlobUploader: Codeunit "Azure AD Blob Storage";
                         InStream: InStream;
                         FileName: Text;
                         SASUrlBase: Text;

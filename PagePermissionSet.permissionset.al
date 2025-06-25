@@ -237,5 +237,7 @@ permissionset 50101 PagePermissionSet
         page "Vendor Profile Card" = X,
         page "Vendor Profile List" = X,
         page "Workflow Frequency PR API" = X,
-        page "Workflow Frequency PR Card" = X;
+        page "Workflow Frequency PR Card" = X,
+        page "Customer Card" = X,
+        page "Customer List" = X;
 }

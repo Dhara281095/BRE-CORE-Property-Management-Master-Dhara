@@ -531,7 +531,7 @@ page 50928 "Payment Mode Card2"
                     approvalflow.SendPaymentModeApprovalToFinanceManger(Format(Rec."Contract ID"), Rec."Tenant Id", Rec."Contract ID", Isupdate);
 
                         PaymentModeRec.Reset();
-                        PaymentModeRec.SetRange("Approval Status", approvalEnum::" ");
+                        PaymentModeRec.SetRange("Approval Status", approvalEnum::Pending);
                     if PaymentModeRec.FindSet() then begin
                         repeat
                         PaymentModeRec."Approval Status" := approvalEnum::Pending;

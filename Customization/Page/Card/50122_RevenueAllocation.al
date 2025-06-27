@@ -789,6 +789,7 @@ page 50122 "Revenue Allocation Card"
         GraceStartDate: Date;
         GraceEndDate: Date;
         ShouldInsertGraceLine: Boolean;
+        FetchMonth: Codeunit "Fetch Month";
     begin
         // Calculate missed days
         MissedDays := PreviousMonthEnd - ContractStartDate + 1;
@@ -869,8 +870,8 @@ page 50122 "Revenue Allocation Card"
         FilteredContractRec."Final Annual Amount" := TotalAnnualAmount;
         FilteredContractRec."Posting Month" := PreviousMonthNo;
         FilteredContractRec."Posting Year" := PreviousYearNo;
-        FilteredContractRec."Posting Period" := GetMonthName(PreviousMonthNo) + ' ' +
-            Format(PreviousYearNo) + ' ' + '-' + ' ' + GetMonthName(PreviousMonthNo) + ' ' + Format(PreviousYearNo);
+        FilteredContractRec."Posting Period" := FetchMonth.GetMonthName(PreviousMonthNo) + ' ' +
+            Format(PreviousYearNo) + ' ' + '-' + ' ' + FetchMonth.GetMonthName(PreviousMonthNo) + ' ' + Format(PreviousYearNo);
         FilteredContractRec."Owner Name" := ContractRec."Owner's Name";
         FilteredContractRec.Insert();
 
@@ -916,46 +917,12 @@ page 50122 "Revenue Allocation Card"
             FilteredContractRec."Final Annual Amount" := TotalAnnualAmount;
             FilteredContractRec."Posting Month" := PreviousMonthNo;
             FilteredContractRec."Posting Year" := PreviousYearNo;
-            FilteredContractRec."Posting Period" := GetMonthName(PreviousMonthNo) + ' ' +
-                Format(PreviousYearNo) + ' ' + '-' + ' ' + GetMonthName(PreviousMonthNo) + ' ' + Format(PreviousYearNo);
+            FilteredContractRec."Posting Period" := FetchMonth.GetMonthName(PreviousMonthNo) + ' ' +
+                Format(PreviousYearNo) + ' ' + '-' + ' ' + FetchMonth.GetMonthName(PreviousMonthNo) + ' ' + Format(PreviousYearNo);
             FilteredContractRec."Owner Name" := ContractRec."Owner's Name";
             FilteredContractRec.Insert();
         end;
     end;
-
-    // Helper function to get month name from month number
-    procedure GetMonthName(MonthNo: Integer): Text
-    begin
-        case MonthNo of
-            1:
-                exit('January');
-            2:
-                exit('February');
-            3:
-                exit('March');
-            4:
-                exit('April');
-            5:
-                exit('May');
-            6:
-                exit('June');
-            7:
-                exit('July');
-            8:
-                exit('August');
-            9:
-                exit('September');
-            10:
-                exit('October');
-            11:
-                exit('November');
-            12:
-                exit('December');
-            else
-                exit(Format(MonthNo)); // Fallback to number if invalid
-        end;
-    end;
-
 
     //---------------Fetch Contracts--------------//
 

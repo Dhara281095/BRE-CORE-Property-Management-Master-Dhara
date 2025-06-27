@@ -136,6 +136,7 @@ page 50973 "Revenue Recognition Item Sub"
         ContractProcessed: Boolean;
         RevenueAllocationStartDate: Date;
         RevenueAllocationEndDate: Date;
+        FetchMonth: Codeunit "Fetch Month";
     begin
         // Clear existing data
         ClearSubgridData();
@@ -158,7 +159,7 @@ page 50973 "Revenue Recognition Item Sub"
         // Reset processed contract counter
         ProcessedContractCount := 0;
 
-        RevenueAllocationStartDate := DMY2Date(1, GetMonthNo(Format(RevenueAllocation.Month)), RevenueAllocation."Financial Year");
+        RevenueAllocationStartDate := DMY2Date(1, FetchMonth.GetMonthNo(Format(RevenueAllocation.Month)), RevenueAllocation."Financial Year");
         RevenueAllocationEndDate := CalcDate('CM', RevenueAllocationStartDate);
 
         // Process active contracts
@@ -383,39 +384,6 @@ page 50973 "Revenue Recognition Item Sub"
         end;
         // Insert the record
         RevenueRecognitionDetails.Insert(true);
-    end;
-
-
-    procedure GetMonthNo(Month: Text): Integer
-    begin
-        case Month of
-            'January':
-                exit(1);
-            'February':
-                exit(2);
-            'March':
-                exit(3);
-            'April':
-                exit(4);
-            'May':
-                exit(5);
-            'June':
-                exit(6);
-            'July':
-                exit(7);
-            'August':
-                exit(8);
-            'September':
-                exit(9);
-            'October':
-                exit(10);
-            'November':
-                exit(11);
-            'December':
-                exit(12);
-            else
-                exit(0); // Fallback to number if invalid
-        end;
     end;
 
     var

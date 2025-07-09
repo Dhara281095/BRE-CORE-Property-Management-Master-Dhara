@@ -6,8 +6,8 @@ page 50719 "Contract End Process Approval"
     Caption = 'Contract End Process Approval';
     UsageCategory = Lists;
     InsertAllowed = false;
-    ModifyAllowed = true;
-    DeleteAllowed = true;
+    ModifyAllowed = false;
+    DeleteAllowed = false;
 
     layout
     {
@@ -20,16 +20,32 @@ page 50719 "Contract End Process Approval"
                     ApplicationArea = All;
                     Editable = true;
                 }
-                field("Property_M Status"; Rec."Property_M Status")
-                {
-                    ApplicationArea = All;
-                    Editable = true;
-                }
+
                 field("Lease_M Status"; Rec."Lease_M Status")
                 {
                     ApplicationArea = All;
                     Editable = true;
                 }
+
+                field("Lease Manager Remark"; Rec."Lease Manager Remark")
+                {
+                    ApplicationArea = All;
+                    Editable = true;
+                }
+
+
+                field("Property_M Status"; Rec."Property_M Status")
+                {
+                    ApplicationArea = All;
+                    Editable = true;
+                }
+
+                field("Property Manager Remark"; Rec."Property Manager Remark")
+                {
+                    ApplicationArea = All;
+                    Editable = true;
+                }
+
                 field("Tenant ID"; Rec."Tenant ID")
                 {
                     ApplicationArea = All;
@@ -60,16 +76,7 @@ page 50719 "Contract End Process Approval"
                     ApplicationArea = All;
                     Editable = true;
                 }
-                field("Lease Manager Remark"; Rec."Lease Manager Remark")
-                {
-                    ApplicationArea = All;
-                    Editable = true;
-                }
-                field("Property Manager Remark"; Rec."Property Manager Remark")
-                {
-                    ApplicationArea = All;
-                    Editable = true;
-                }
+
                 field("Value"; Rec."Value")
                 {
                     ApplicationArea = All;

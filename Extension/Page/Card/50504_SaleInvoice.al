@@ -288,6 +288,10 @@ pageextension 50504 SalesInvoice extends "Sales Invoice"
                 documentattachment: Codeunit UploadAttachment;
                 SalesHeader1: Record "Sales Header";
                 customercard: Record Customer;
+                azureBlobUploader: Codeunit "Azure AD Blob Storage";
+
+                folderName: Text;
+
             begin
                 if Rec."Approval Status" <> Rec."Approval Status"::Approved then
                     Error('The Sales Credit Memo cannot be posted because the approval status is not "Approved".');
@@ -317,8 +321,10 @@ pageextension 50504 SalesInvoice extends "Sales Invoice"
 
                 TempBlob.CreateInStream(InStream);
                 FileName := 'Invoice_' + Rec."No." + FileExtension;
-                SASUrlWithFileName := StrSubstNo('%1/%2?%3', CopyStr(SASUrlBase, 1, StrPos(SASUrlBase, '?') - 1), FileName, CopyStr(SASUrlBase, StrPos(SASUrlBase, '?') + 1));
-                UploadResult := documentattachment.UploadDocumentToBlobStorage(SASUrlWithFileName, FileName, InStream);
+                // SASUrlWithFileName := StrSubstNo('%1/%2?%3', CopyStr(SASUrlBase, 1, StrPos(SASUrlBase, '?') - 1), FileName, CopyStr(SASUrlBase, StrPos(SASUrlBase, '?') + 1));
+                folderName := 'SalesInvoiceDocuments';
+                UploadResult := azureBlobUploader.UploadDocumentToBlob(InStream, FileName, folderName);
+                // UploadResult := documentattachment.UploadDocumentToBlobStorage(SASUrlWithFileName, FileName, InStream);
                 Rec."View Invoice" := FileName;
                 Rec."View Document URL" := UploadResult;
                 Rec.Modify();

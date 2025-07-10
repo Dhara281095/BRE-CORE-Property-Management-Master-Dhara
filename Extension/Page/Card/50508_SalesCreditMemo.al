@@ -193,6 +193,8 @@ pageextension 50508 SalesCreditMemo extends "Sales Credit Memo"
                 documentattachment: Codeunit UploadAttachment;
                 SalesHeader1: Record "Sales Header";
                 customercard: Record Customer;
+                azureBlobUploader: Codeunit "Azure AD Blob Storage";
+                folderName: Text;
             begin
                 if Rec."Approval Status for CreditNote" <> Rec."Approval Status for CreditNote"::Approved then
                     Error('The Sales Credit Memo cannot be posted because the approval status is not "Approved".');
@@ -224,8 +226,8 @@ pageextension 50508 SalesCreditMemo extends "Sales Credit Memo"
 
                 TempBlob.CreateInStream(InStream);
                 FileName := 'CreditNote' + Rec."No." + FileExtension;
-                SASUrlWithFileName := StrSubstNo('%1/%2?%3', CopyStr(SASUrlBase, 1, StrPos(SASUrlBase, '?') - 1), FileName, CopyStr(SASUrlBase, StrPos(SASUrlBase, '?') + 1));
-                UploadResult := documentattachment.UploadDocumentToBlobStorage(SASUrlWithFileName, FileName, InStream);
+                folderName := 'SalesCreditMemoDocuments';
+                UploadResult := azureBlobUploader.UploadDocumentToBlob(InStream, FileName, folderName);
                 Rec."Credit Memo Document" := FileName;
                 Rec."Credit Memo URL" := UploadResult;
                 Rec.Modify();

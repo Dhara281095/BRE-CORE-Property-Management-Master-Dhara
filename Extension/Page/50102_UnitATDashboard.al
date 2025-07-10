@@ -233,6 +233,47 @@ pageextension 50102 UnitManagement extends "O365 Activities"
                     end;
                 }
             }
+            cuegroup("Sales Credit Memo")
+            {
+                field("Sales Credit Memo Count"; GetSalesCreditMemoCount())
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Posted Sales Credit Memo';
+                    ToolTip = 'Count of Posted Sales Credit Memos.';
+
+                    trigger OnDrillDown()
+                    begin
+                        // Drill down to the Sales Credit Memo list page
+                        PAGE.RUN(PAGE::"Posted Sales Credit Memos");
+                    end;
+                }
+                field("Full Adjusted Credit Memo Count"; GefulladjustedCreditMemoCount())
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Full Adjusted Credit Memo';
+                    ToolTip = 'Count of Sales Credit Memos with remaining amount 0.';
+                    //  StyleExpr = 'Unfavorable';  // This will display the count in red to indicate attention is needed
+
+                    trigger OnDrillDown()
+                    begin
+                        // Drill down to the fully adjusted credit memo list page
+                        PAGE.RUN(PAGE::"Posted Sales Credit Memos");
+                    end;
+                }
+                field("Unpaid Credit Memo Count"; Getunpaidcreditmemo())
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Unpaid Credit Memo';
+                    ToolTip = 'Count of Sales Credit Memos that are unpaid.';
+                    StyleExpr = 'Unfavorable';  // This will display the count in red to indicate attention is needed
+
+                    trigger OnDrillDown()
+                    begin
+                        // Drill down to the unpaid credit memo list page
+                        PAGE.RUN(PAGE::"Posted Sales Credit Memos");
+                    end;
+                }
+            }
             cuegroup("Payments ")
             {
                 field("Payments Due Within 10 Days"; GetPaymentsDueCount())
@@ -481,4 +522,28 @@ pageextension 50102 UnitManagement extends "O365 Activities"
         ContractRec.SetFilter(SuspensionEndDate, '%1', 0D); // Filter for empty date
         exit(ContractRec.Count());
     end;
+
+    procedure GetSalesCreditMemoCount(): Integer;
+    var
+        SalesCreditMemoRec: Record "Sales Cr.Memo Header"; // Replace with your actual Sales Credit Memo Table
+    begin
+        exit(SalesCreditMemoRec.Count()); // Return the count of Sales Credit Memos
+    end;
+
+    procedure GefulladjustedCreditMemoCount(): Integer;
+    var
+        SalesCreditMemoRec: Record "Sales Cr.Memo Header"; // Replace with your actual Sales Credit Memo Table
+    begin
+        SalesCreditMemoRec.SetRange("Remaining Amount", 0);
+        exit(SalesCreditMemoRec.Count()); // Return the count of Sales Credit Memos with remaining amount 0
+    end;
+
+    procedure Getunpaidcreditmemo(): Integer;
+    var
+        SalesCreditMemoRec: Record "Sales Cr.Memo Header"; // Replace with your actual Sales Credit Memo Table
+    begin
+        SalesCreditMemoRec.SetRange(Paid, false); // Assuming 'Paid' is a boolean field indicating if the credit memo is paid
+        exit(SalesCreditMemoRec.Count()); // Return the count of Sales Credit Memos with remaining amount 0
+    end;
 }
+

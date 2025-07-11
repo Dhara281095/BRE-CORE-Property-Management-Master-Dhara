@@ -317,7 +317,7 @@ page 50313 "Tenancy Contract Card"
                 field("Contract End Date"; Rec."Contract End Date")
                 {
                     ApplicationArea = All;
-                    Editable = false;
+                    Editable = true;
                 }
                 field("Contract Tenor"; Rec."Contract Tenor")
                 {
@@ -489,7 +489,7 @@ page 50313 "Tenancy Contract Card"
                         uploadResult: Text;
                         folderName: Text;
                     begin
-                        folderName := 'TenantDocuments';
+                        folderName := 'TenancyContractDocuments';
                         fileName := azureBlobUploader.ValidateDocument(uploadResult, folderName);
                         if fileName <> '' then begin
                             Rec."Upload Document" := fileName;

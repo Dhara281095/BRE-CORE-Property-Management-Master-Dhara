@@ -269,7 +269,7 @@ page 50972 "Revenue Recognition Main"
         FilteredContractRec."Contract End Date" := ContractRec."Contract End Date";
         FilteredContractRec."Grace Days" := ContractRec."Grace Period";
         FilteredContractRec."Contract Amount" := ContractRec."Contract Amount Including VAT";
-        //FilteredContractRec."Annual Amount" := ContractRec."Rent Amount";
+        // FilteredContractRec."Annual Amount" := ContractRec."Rent Amount";
         FilteredContractRec."Owner Name" := ContractRec."Owner's Name";
 
 
@@ -283,8 +283,8 @@ page 50972 "Revenue Recognition Main"
                 TotalMergedAmount += RevenueItemRec."Total Value";
             until RevenueItemRec.Next() = 0;
         end;
-        FilteredContractRec."No Of Days" := RevenueItemRec."No Of Days";
-        FilteredContractRec."Per Day Amount" := PerDayMergedAmount;
+        // FilteredContractRec."No Of Days" := RevenueItemRec."No Of Days";
+        FilteredContractRec."Per Day Rent" := PerDayMergedAmount;
         FilteredContractRec."Total Value" := TotalMergedAmount;
         FilteredContractRec."Owner Share" := TotalMergedAmount; // If same as Total Value
         // TotalDays := FilteredContractRec."Contract End Date" - FilteredContractRec."Contract Start Date" + 1;

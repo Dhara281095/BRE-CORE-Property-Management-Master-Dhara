@@ -123,13 +123,13 @@ page 50122 "Revenue Allocation Card"
             {
                 Caption = 'Final Amount';
 
-                field(TotalAnnualAmounts; TotalAnnualAmount)
+                field(TotalAnnualAmounts; totalcombinefinalamount)
                 {
                     Caption = 'Total Annual Amount';
                     Editable = false;
                     ApplicationArea = All;
                 }
-                field(TotalFinalAnnualAmounts; TotalFinalAnnualAmount)
+                field(TotalFinalAnnualAmounts; totalcombinefinalannualamount)
                 {
                     Caption = 'Total Final Annual Amount';
                     Editable = false;
@@ -1548,6 +1548,8 @@ page 50122 "Revenue Allocation Card"
 
         totalcombinecontractAmounts := totalcontractAmountsss + totalcontractAmounts;
         totalcombineamounts := totalamountsss + totalamounts;
+        totalcombinefinalamount := TotalAnnualAmounts + totalannualamountsss;
+        totalcombinefinalannualamount := TotalFinalAnnualAmounts + totalfinalannualamountsss;
     end;
 
     trigger OnAfterGetCurrRecord()
@@ -2810,6 +2812,9 @@ page 50122 "Revenue Allocation Card"
 
         totalcombinecontractAmounts: Decimal;
         totalcombineamounts: Decimal;
+
+        totalcombinefinalamount: Decimal;
+        totalcombinefinalannualamount: Decimal;
 
         TotalAnnualAmounts: Decimal;
 

@@ -518,6 +518,7 @@ page 50122 "Revenue Allocation Card"
         FilteredContractRec."Grace Days" := ContractRec."Grace Period";
         FilteredContractRec."Grace Start Date" := ContractRec."Grace Start Date";
         FilteredContractRec."Grace End Date" := ContractRec."Grace End Date";
+        FilteredContractRec."Unit Type" := ContractRec."Usage Type";
         FilteredContractRec.Description := 'Regular';
 
         if ContractRec."Praposal Type Selected" = ContractRec."Praposal Type Selected"::"Single Unit" then
@@ -576,6 +577,7 @@ page 50122 "Revenue Allocation Card"
             FilteredContractRec."Grace Days" := ContractRec."Grace Period";
             FilteredContractRec."Grace Start Date" := ContractRec."Grace Start Date";
             FilteredContractRec."Grace End Date" := ContractRec."Grace End Date";
+            FilteredContractRec."Unit Type" := ContractRec."Usage Type";
             FilteredContractRec.Description := 'Grace Period';
 
             if ContractRec."Praposal Type Selected" = ContractRec."Praposal Type Selected"::"Single Unit" then
@@ -881,6 +883,7 @@ page 50122 "Revenue Allocation Card"
         FilteredContractRec."Grace Days" := ContractRec."Grace Period";
         FilteredContractRec."Grace Start Date" := ContractRec."Grace Start Date";
         FilteredContractRec."Grace End Date" := ContractRec."Grace End Date";
+        FilteredContractRec."Unit Type" := ContractRec."Usage Type";
         FilteredContractRec.Description := 'Missed Revenue';
 
         if ContractRec."Praposal Type Selected" = ContractRec."Praposal Type Selected"::"Single Unit" then
@@ -938,6 +941,7 @@ page 50122 "Revenue Allocation Card"
             FilteredContractRec."Grace Days" := ContractRec."Grace Period";
             FilteredContractRec."Grace Start Date" := ContractRec."Grace Start Date";
             FilteredContractRec."Grace End Date" := ContractRec."Grace End Date";
+            FilteredContractRec."Unit Type" := ContractRec."Usage Type";
             FilteredContractRec.Description := 'Grace Period';
 
             if ContractRec."Praposal Type Selected" = ContractRec."Praposal Type Selected"::"Single Unit" then
@@ -1469,6 +1473,7 @@ page 50122 "Revenue Allocation Card"
             FilteredContractRec."Grace Days" := ContractRec."Grace Period";
             FilteredContractRec."Grace Start Date" := ContractRec."Grace Start Date";
             FilteredContractRec."Grace End Date" := ContractRec."Grace End Date";
+            FilteredContractRec."Unit Type" := ContractRec."Usage Type";
 
             if ContractRec."Praposal Type Selected" = ContractRec."Praposal Type Selected"::"Single Unit" then
                 FilteredContractRec."Single Unit Names" := ContractRec."Unit Name"
@@ -1773,6 +1778,7 @@ page 50122 "Revenue Allocation Card"
         FilteredContractRec."Customer Name" := ContractRec."Customer Name";
         FilteredContractRec."Contract Start Date" := ContractRec."Contract Start Date";
         FilteredContractRec."Contract End Date" := ContractRec."Contract End Date";
+        FilteredContractRec."Unit Type" := ContractRec."Usage Type";
 
         if ContractRec."Praposal Type Selected" = ContractRec."Praposal Type Selected"::"Single Unit" then
             FilteredContractRec."Single Unit Names" := ContractRec."Unit Name"
@@ -1840,6 +1846,7 @@ page 50122 "Revenue Allocation Card"
             FilteredContractRec."Grace Days" := ContractRec."Grace Period";
             FilteredContractRec."Grace Start Date" := ContractRec."Grace Start Date";
             FilteredContractRec."Grace End Date" := ContractRec."Grace End Date";
+            FilteredContractRec."Unit Type" := ContractRec."Usage Type";
             FilteredContractRec.Description := 'Grace Period';
 
             if ContractRec."Praposal Type Selected" = ContractRec."Praposal Type Selected"::"Single Unit" then
@@ -2191,6 +2198,7 @@ page 50122 "Revenue Allocation Card"
         FilteredContractRec."Grace Days" := ContractRec."Grace Period";
         FilteredContractRec."Grace Start Date" := ContractRec."Grace Start Date";
         FilteredContractRec."Grace End Date" := ContractRec."Grace End Date";
+        FilteredContractRec."Unit Type" := ContractRec."Usage Type";
         FilteredContractRec.Description := 'Missed Revenue';
 
         if ContractRec."Praposal Type Selected" = ContractRec."Praposal Type Selected"::"Single Unit" then
@@ -2251,6 +2259,7 @@ page 50122 "Revenue Allocation Card"
             FilteredContractRec."Grace Days" := ContractRec."Grace Period";
             FilteredContractRec."Grace Start Date" := ContractRec."Grace Start Date";
             FilteredContractRec."Grace End Date" := ContractRec."Grace End Date";
+            FilteredContractRec."Unit Type" := ContractRec."Usage Type";
             FilteredContractRec.Description := 'Grace Period';
 
             if ContractRec."Praposal Type Selected" = ContractRec."Praposal Type Selected"::"Single Unit" then
@@ -2748,6 +2757,7 @@ page 50122 "Revenue Allocation Card"
             FilteredContractRec."Grace Days" := ContractRec."Grace Period";
             FilteredContractRec."Grace Start Date" := ContractRec."Grace Start Date";
             FilteredContractRec."Grace End Date" := ContractRec."Grace End Date";
+            FilteredContractRec."Unit Type" := ContractRec."Usage Type";
 
             if ContractRec."Praposal Type Selected" = ContractRec."Praposal Type Selected"::"Single Unit" then
                 FilteredContractRec."Single Unit Names" := ContractRec."Unit Name"

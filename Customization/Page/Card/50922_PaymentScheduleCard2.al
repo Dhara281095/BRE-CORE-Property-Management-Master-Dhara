@@ -158,11 +158,6 @@ page 50922 "Payment Schedule Card2"
                 {
                     ApplicationArea = All;
                     Visible = false;
-                   
-
-
-
-
                 }
                 field("Payment Received Date"; Rec."Payment Recieved Date")
                 {
@@ -185,14 +180,30 @@ page 50922 "Payment Schedule Card2"
                     Editable = false;
 
                 }
-
                 field("Cheque Number"; Rec."Cheque Number")
                 {
                     ApplicationArea = All;
                     Caption = 'Cheque Number';
                     Editable = false;
-
                 }
+                field("Credit Note No."; Rec."Credit Note No.")
+                {
+                    ApplicationArea = All;
+                    Caption = '"Credit Note No."';
+                }
+
+                field("Credit Note Amount"; Rec."Credit Note Amount")
+                {
+                    ApplicationArea = All;
+                    Caption = '"Credit Note Amount"';
+                }
+
+                field("Final Rent Amount"; Rec."Final Rent Amount")
+                {
+                    ApplicationArea = All;
+                    Caption = '"Final Rent Amount"';
+                }
+
 
             }
 
@@ -294,9 +305,9 @@ page 50922 "Payment Schedule Card2"
     var
         InvoicedField: Boolean;
 
-  
 
-   
+
+
 
 
 }

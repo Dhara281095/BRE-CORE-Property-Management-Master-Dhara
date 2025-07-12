@@ -386,6 +386,18 @@ page 50928 "Payment Mode Card2"
                     Visible = false;
                 }
 
+                  field("Credit Note Amount"; Rec."Credit Note Amount")
+                {
+                    ApplicationArea = All;
+                    Caption = '"Credit Note Amount"';
+                }
+
+                field("Final Rent Amount"; Rec."Final Rent Amount")
+                {
+                    ApplicationArea = All;
+                    Caption = '"Final Rent Amount"';
+                }
+
 
             }
 

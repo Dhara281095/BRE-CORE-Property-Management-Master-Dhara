@@ -397,6 +397,11 @@ page 50928 "Payment Mode Card2"
                     ApplicationArea = All;
                     Caption = '"Final Rent Amount"';
                 }
+                   field("Credit Note No."; Rec."Credit Note No.")
+                {
+                    ApplicationArea = All;
+                    Caption = '"Credit Note No."';
+                }
 
 
             }

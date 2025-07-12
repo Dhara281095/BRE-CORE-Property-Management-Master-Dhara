@@ -18,6 +18,11 @@ page 50974 "Revenue Recognition Detail Sub"
                     Caption = 'Entry No.';
                     Visible = false;
                 }
+
+                field("Description"; Rec."Description")
+                {
+                    ApplicationArea = All;
+                }
                 field("Item Type"; Rec."Item Type")
                 {
                     ApplicationArea = All;

@@ -449,6 +449,7 @@ page 50973 "Revenue Recognition Item Sub"
                 RevenueRecognitionDetails."Grace Days" := pTenancyContract."Grace Period";
                 RevenueRecognitionDetails."Grace Start Date" := pTenancyContract."Grace Start Date";
                 RevenueRecognitionDetails."Grace End Date" := pTenancyContract."Grace End Date";
+                RevenueRecognitionDetails."Description" := 'Missed Revenue';
 
                 // Set unit names based on proposal type
                 if pTenancyContract."Praposal Type Selected" = pTenancyContract."Praposal Type Selected"::"Single Unit" then
@@ -463,9 +464,12 @@ page 50973 "Revenue Recognition Item Sub"
                 RevenueRecognitionDetails."Posting Year" := pMissedAllocation."Financial Year";
 
                 // Mark as missed revenue allocation with contract start date info
-                RevenueRecognitionDetails."Posting Period" :=
-                    'MISSED: ' + FORMAT(pMissedAllocation.Month) + '/' + FORMAT(pMissedAllocation."Financial Year") +
-                    ' (Started: ' + FORMAT(pTenancyContract."Contract Start Date") + ')';
+                // RevenueRecognitionDetails."Posting Period" :=
+                //     'MISSED: ' + FORMAT(pMissedAllocation.Month) + '/' + FORMAT(pMissedAllocation."Financial Year") +
+                //     ' (Started: ' + FORMAT(pTenancyContract."Contract Start Date") + ')';
+
+                RevenueRecognitionDetails."Posting Period" := GetMonthName(pMissedAllocation.Month) + ' ' +
+                          Format(pMissedAllocation."Financial Year") + ' ' + '-' + ' ' + GetMonthName(pMissedAllocation.Month) + ' ' + Format(pMissedAllocation."Financial Year");
 
                 // Set termination date and number of days
                 RevenueRecognitionDetails."Termination Date" := TerminationDate;
@@ -495,6 +499,38 @@ page 50973 "Revenue Recognition Item Sub"
                 // Insert the missed revenue record
                 RevenueRecognitionDetails.Insert(true);
             end;
+        end;
+    end;
+
+    procedure GetMonthName(MonthNo: Integer): Text
+    begin
+        case MonthNo of
+            1:
+                exit('January');
+            2:
+                exit('February');
+            3:
+                exit('March');
+            4:
+                exit('April');
+            5:
+                exit('May');
+            6:
+                exit('June');
+            7:
+                exit('July');
+            8:
+                exit('August');
+            9:
+                exit('September');
+            10:
+                exit('October');
+            11:
+                exit('November');
+            12:
+                exit('December');
+            else
+                exit(Format(MonthNo)); // Fallback to number if invalid
         end;
     end;
 
@@ -1024,6 +1060,7 @@ page 50973 "Revenue Recognition Item Sub"
         RevenueRecognitionDetails."Grace Days" := pTenancyContract."Grace Period";
         RevenueRecognitionDetails."Grace Start Date" := pTenancyContract."Grace Start Date";
         RevenueRecognitionDetails."Grace End Date" := pTenancyContract."Grace End Date";
+        RevenueRecognitionDetails."Description" := 'Regular';
         if pTenancyContract."Praposal Type Selected" = pTenancyContract."Praposal Type Selected"::"Single Unit" then
             RevenueRecognitionDetails."Single Unit Names" := pTenancyContract."Unit Name"
         else if pTenancyContract."Praposal Type Selected" = pTenancyContract."Praposal Type Selected"::"Merge Unit" then
@@ -1035,15 +1072,15 @@ page 50973 "Revenue Recognition Item Sub"
         RevenueRecognitionDetails."Posting Month" := pRevenueAllocation.Month;
         RevenueRecognitionDetails."Posting Year" := pRevenueAllocation."Financial Year";
 
-        // NEW: Add description to differentiate regular vs suspended period allocation
+        // NEW: Add Description to differentiate regular vs suspended period allocation
         if IsSuspendedPeriodAllocation then
-            RevenueRecognitionDetails."Posting Period" :=
-                FORMAT(pRevenueAllocation.Month) + ' ' +
-                FORMAT(pRevenueAllocation."Financial Year")
+            RevenueRecognitionDetails."Posting Period" := Format(RevenueRecognitionDetails."Posting Month") +
+           ' ' + Format(RevenueRecognitionDetails."Posting Year") + ' ' + '-' + ' ' +
+           Format(RevenueRecognitionDetails."Posting Month") + ' ' + Format(RevenueRecognitionDetails."Posting Year")
         else
-            RevenueRecognitionDetails."Posting Period" :=
-                FORMAT(pRevenueAllocation.Month) + ' ' +
-                FORMAT(pRevenueAllocation."Financial Year");
+            RevenueRecognitionDetails."Posting Period" := Format(RevenueRecognitionDetails."Posting Month") +
+            ' ' + Format(RevenueRecognitionDetails."Posting Year") + ' ' + '-' + ' ' +
+            Format(RevenueRecognitionDetails."Posting Month") + ' ' + Format(RevenueRecognitionDetails."Posting Year");
 
         // Get termination date from Final Calculation by Contract ID match
         GetTerminationDate(pTenancyContract."Contract ID", RevenueRecognitionDetails);
@@ -1465,6 +1502,7 @@ page 50973 "Revenue Recognition Item Sub"
                 RevenueRecognitionDetails."Grace Days" := pTenancyContract."Grace Period";
                 RevenueRecognitionDetails."Grace Start Date" := pTenancyContract."Grace Start Date";
                 RevenueRecognitionDetails."Grace End Date" := pTenancyContract."Grace End Date";
+                RevenueRecognitionDetails."Description" := 'Missed Revenue';
 
                 // Set unit names based on proposal type
                 if pTenancyContract."Praposal Type Selected" = pTenancyContract."Praposal Type Selected"::"Single Unit" then
@@ -1479,9 +1517,12 @@ page 50973 "Revenue Recognition Item Sub"
                 RevenueRecognitionDetails."Posting Year" := pMissedAllocation."Financial Year";
 
                 // Mark as missed revenue allocation with contract start date info
-                RevenueRecognitionDetails."Posting Period" :=
-                    'MISSED: ' + FORMAT(pMissedAllocation.Month) + '/' + FORMAT(pMissedAllocation."Financial Year") +
-                    ' (Started: ' + FORMAT(pTenancyContract."Contract Start Date") + ')';
+                // RevenueRecognitionDetails."Posting Period" :=
+                //     'MISSED: ' + FORMAT(pMissedAllocation.Month) + '/' + FORMAT(pMissedAllocation."Financial Year") +
+                //     ' (Started: ' + FORMAT(pTenancyContract."Contract Start Date") + ')';
+                RevenueRecognitionDetails."Posting Period" := GetMonthName(pMissedAllocation.Month) + ' ' +
+                                       Format(pMissedAllocation."Financial Year") + ' ' + '-' + ' ' + GetMonthName(pMissedAllocation.Month) + ' ' + Format(pMissedAllocation."Financial Year");
+
 
                 // Set termination date and number of days
                 RevenueRecognitionDetails."Termination Date" := TerminationDate;
@@ -2044,6 +2085,7 @@ page 50973 "Revenue Recognition Item Sub"
         RevenueRecognitionDetails."Grace Days" := pTenancyContract."Grace Period";
         RevenueRecognitionDetails."Grace Start Date" := pTenancyContract."Grace Start Date";
         RevenueRecognitionDetails."Grace End Date" := pTenancyContract."Grace End Date";
+        RevenueRecognitionDetails."Description" := 'Regular';
         if pTenancyContract."Praposal Type Selected" = pTenancyContract."Praposal Type Selected"::"Single Unit" then
             RevenueRecognitionDetails."Single Unit Names" := pTenancyContract."Unit Name"
         else if pTenancyContract."Praposal Type Selected" = pTenancyContract."Praposal Type Selected"::"Merge Unit" then

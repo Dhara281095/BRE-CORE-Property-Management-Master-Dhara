@@ -48,7 +48,6 @@ permissionset 50101 PagePermissionSet
         page "Category List" = X,
         page "Cheque Management List" = X,
         page "Cheque Mangement Card" = X,
-        page "COA Setup List" = X,
         page CombinePaymentLogCard = X,
         page "Commercial Property List" = X,
         page "Commercial Unit List" = X,

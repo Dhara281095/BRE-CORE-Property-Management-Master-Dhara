@@ -23,6 +23,10 @@ page 50974 "Revenue Recognition Detail Sub"
                 {
                     ApplicationArea = All;
                 }
+                field("Unit Type"; Rec."Unit Type")
+                {
+                    ApplicationArea = All;
+                }
                 field("Item Type"; Rec."Item Type")
                 {
                     ApplicationArea = All;

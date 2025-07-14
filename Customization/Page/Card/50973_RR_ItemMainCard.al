@@ -1128,7 +1128,15 @@ page 50973 "Revenue Recognition Item Sub"
        (revenuestructuredetails."Period End Date" >= LastDayOfTargetMonth)) then begin
                     RevenueRecognitionDetails."Multi Year Start Date" := revenuestructuredetails."Period Start Date";
                     RevenueRecognitionDetails."Multi Year End Date" := revenuestructuredetails."Period End Date";
-                    RevenueRecognitionDetails."Annual Amount" := revenuestructuredetails."Final Annual Amount" + revenuestructuredetails."Final Annual Amount" * 5 / 100;
+
+
+                    if revenuestructuredetails."VAT %" = 1 then
+                        revenuestructuredetails."VAT %" := 5
+                    else
+                        revenuestructuredetails."VAT %" := 0;
+
+                    RevenueRecognitionDetails."Annual Amount" := revenuestructuredetails."Final Annual Amount" + revenuestructuredetails."Final Annual Amount" * revenuestructuredetails."VAT %" / 100;
+                    // RevenueRecognitionDetails."Annual Amount" := revenuestructuredetails."Final Annual Amount" + revenuestructuredetails."Final Annual Amount" * 5 / 100;
                     RevenueRecognitionDetails."Final Annual Amount" := RevenueRecognitionDetails."Annual Amount";
                 end;
             until revenuestructuredetails.Next() = 0;
@@ -2168,7 +2176,13 @@ page 50973 "Revenue Recognition Item Sub"
       (revenuestructuredetails."Period End Date" >= LastDayOfTargetMonth)) then begin
                     RevenueRecognitionDetails."Multi Year Start Date" := revenuestructuredetails."Period Start Date";
                     RevenueRecognitionDetails."Multi Year End Date" := revenuestructuredetails."Period End Date";
-                    RevenueRecognitionDetails."Annual Amount" := revenuestructuredetails."Final Annual Amount" + revenuestructuredetails."Final Annual Amount" * 5 / 100;
+
+                    if revenuestructuredetails."VAT %" = 1 then
+                        revenuestructuredetails."VAT %" := 5
+                    else
+                        revenuestructuredetails."VAT %" := 0;
+
+                    RevenueRecognitionDetails."Annual Amount" := revenuestructuredetails."Final Annual Amount" + revenuestructuredetails."Final Annual Amount" * revenuestructuredetails."VAT %" / 100;
                     RevenueRecognitionDetails."Final Annual Amount" := RevenueRecognitionDetails."Annual Amount";
                 end;
             until revenuestructuredetails.Next() = 0;

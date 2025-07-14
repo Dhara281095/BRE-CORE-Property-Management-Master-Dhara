@@ -1871,7 +1871,7 @@ page 50122 "Revenue Allocation Card"
             FilteredContractRec."Multi Year Start Date" := MultiYearStartDate;
             FilteredContractRec."Multi Year End Date" := MultiYearEndDate;
             FilteredContractRec."No Of Days" := CalculatedDays;
-            FilteredContractRec."Per Month Rent" := -DifferencePerDayRent; // Negative value
+            FilteredContractRec."Per Month Rent" := -DifferencePerDayRent; // Negative value                                                   
             FilteredContractRec."Contract Amount" := ContractRec."Annual Rent Amount"; // Use grid's annual amount
             FilteredContractRec."Annual Amount" := GridAnnualAmount;
             FilteredContractRec."Total Value" := -GracePeriodAdjustmentValue; // Negative adjustment
@@ -1905,14 +1905,14 @@ page 50122 "Revenue Allocation Card"
         exit(MonthlyRate);
     end;
 
-    procedure calculatepermonthrents(permonthrent: Decimal; CalculatedDays: Integer; PreviousMonthNo: Integer; PreviousYearNo: Integer): Decimal
+    procedure calculatepermonthrents(permonthrent: Decimal; MissedDays: Integer; PreviousMonthNo: Integer; PreviousYearNo: Integer): Decimal
     var
         revenuerecognition: Record "Revenue Recognition";
         MonthlyRate: Decimal;
     begin
 
-        if CalculatedDays < revenuerecognition.GetDaysInMonthss(DMY2Date(1, PreviousMonthNo, PreviousYearNo)) then begin
-            MonthlyRate := Round(permonthrent / revenuerecognition.GetDaysInMonthss(DMY2Date(1, PreviousMonthNo, PreviousYearNo)) * CalculatedDays);
+        if MissedDays < revenuerecognition.GetDaysInMonthss(DMY2Date(1, PreviousMonthNo, PreviousYearNo)) then begin
+            MonthlyRate := Round(permonthrent / revenuerecognition.GetDaysInMonthss(DMY2Date(1, PreviousMonthNo, PreviousYearNo)) * MissedDays);
         end else begin
             MonthlyRate := permonthrent;
         end;
@@ -2229,9 +2229,9 @@ page 50122 "Revenue Allocation Card"
         FilteredContractRec."Annual Amount" := GridAnnualAmount;
         FilteredContractRec."Final Annual Amount" := TotalAnnualAmount;
         permonthrent := FilteredContractRec."Final Annual Amount" / 12;
-        FilteredContractRec."Per Month Rent" := calculatepermonthrents(permonthrent, CalculatedDays, PreviousMonthNo, PreviousYearNo); // Use the per day rent passed from the grid
-        FilteredContractRec."Total Value" := MissedDays * FilteredContractRec."Per Month Rent";
-        FilteredContractRec."Owner Share" := MissedDays * FilteredContractRec."Per Month Rent";
+        FilteredContractRec."Per Month Rent" := calculatepermonthrents(permonthrent, MissedDays, PreviousMonthNo, PreviousYearNo); // Use the per day rent passed from the grid
+        FilteredContractRec."Total Value" := FilteredContractRec."Per Month Rent";
+        FilteredContractRec."Owner Share" := FilteredContractRec."Per Month Rent";
         FilteredContractRec."Posting Month" := PreviousMonthNo;
         FilteredContractRec."Posting Year" := PreviousYearNo;
         FilteredContractRec."Posting Period" := GetMonthName(PreviousMonthNo) + ' ' +

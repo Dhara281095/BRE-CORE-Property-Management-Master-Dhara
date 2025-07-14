@@ -1036,6 +1036,8 @@ page 50973 "Revenue Recognition Item Sub"
         TerminationDate: Date;
         ActualNoOfDays: Integer;
         Yearlydays: Integer;
+        FirstDayOfTargetMonth: Date;
+        LastDayOfTargetMonth: Date;
     begin
         // Get next entry number
         RevenueRecognitionDetails.Reset();
@@ -1043,6 +1045,9 @@ page 50973 "Revenue Recognition Item Sub"
             NextEntryNo := RevenueRecognitionDetails."Entry No." + 1
         else
             NextEntryNo := 1;
+
+        FirstDayOfTargetMonth := DMY2Date(1, pRevenueAllocation.Month, pRevenueAllocation."Financial Year");
+        LastDayOfTargetMonth := CALCDATE('<CM>', FirstDayOfTargetMonth) - 1;
 
         // Create new Revenue Recognition Detail record
         RevenueRecognitionDetails.Init();
@@ -1062,6 +1067,7 @@ page 50973 "Revenue Recognition Item Sub"
         RevenueRecognitionDetails."Grace Start Date" := pTenancyContract."Grace Start Date";
         RevenueRecognitionDetails."Grace End Date" := pTenancyContract."Grace End Date";
         RevenueRecognitionDetails."Unit Type" := pTenancyContract."Usage Type";
+        RevenueRecognitionDetails."Item Type" := pRevenueStructure."Secondary Item Type";
         RevenueRecognitionDetails."Description" := 'Regular';
         if pTenancyContract."Praposal Type Selected" = pTenancyContract."Praposal Type Selected"::"Single Unit" then
             RevenueRecognitionDetails."Single Unit Names" := pTenancyContract."Unit Name"
@@ -1112,13 +1118,18 @@ page 50973 "Revenue Recognition Item Sub"
         revenuestructuredetails.SetRange("Secondary Item Type", pRevenueStructure."Secondary Item Type");
         if revenuestructuredetails.FindSet() then begin
             repeat
-                if (revenuestructuredetails."Period Start Date" <= PostingDate) and
-                   (revenuestructuredetails."Period End Date" >= PostingDate) then begin
+                // if (revenuestructuredetails."Period Start Date" <= PostingDate) and
+                //    (revenuestructuredetails."Period End Date" >= PostingDate) then begin
+                if ((revenuestructuredetails."Period Start Date" >= FirstDayOfTargetMonth) and
+       (revenuestructuredetails."Period Start Date" <= LastDayOfTargetMonth)) OR
+        ((revenuestructuredetails."Period End Date" <= LastDayOfTargetMonth) and
+       (revenuestructuredetails."Period End Date" >= FirstDayOfTargetMonth)) OR
+       ((revenuestructuredetails."Period Start Date" <= FirstDayOfTargetMonth) and
+       (revenuestructuredetails."Period End Date" >= LastDayOfTargetMonth)) then begin
                     RevenueRecognitionDetails."Multi Year Start Date" := revenuestructuredetails."Period Start Date";
                     RevenueRecognitionDetails."Multi Year End Date" := revenuestructuredetails."Period End Date";
                     RevenueRecognitionDetails."Annual Amount" := revenuestructuredetails."Final Annual Amount" + revenuestructuredetails."Final Annual Amount" * 5 / 100;
                     RevenueRecognitionDetails."Final Annual Amount" := RevenueRecognitionDetails."Annual Amount";
-                    RevenueRecognitionDetails."Item Type" := revenuestructuredetails."Secondary Item Type";
                 end;
             until revenuestructuredetails.Next() = 0;
         end;
@@ -2058,6 +2069,8 @@ page 50973 "Revenue Recognition Item Sub"
         ActualNoOfDays: Integer;
         Yearlydays: Integer;
         permonthrent: Decimal;
+        FirstDayOfTargetMonth: Date;
+        LastDayOfTargetMonth: Date;
     begin
         // Get next entry number
         RevenueRecognitionDetails.Reset();
@@ -2068,6 +2081,9 @@ page 50973 "Revenue Recognition Item Sub"
 
         PostingDate := DMY2Date(1, pRevenueAllocation.Month, pRevenueAllocation."Financial Year");
 
+
+        FirstDayOfTargetMonth := DMY2Date(1, pRevenueAllocation.Month, pRevenueAllocation."Financial Year");
+        LastDayOfTargetMonth := CALCDATE('<CM>', FirstDayOfTargetMonth);
 
 
 
@@ -2089,6 +2105,7 @@ page 50973 "Revenue Recognition Item Sub"
         RevenueRecognitionDetails."Grace Start Date" := pTenancyContract."Grace Start Date";
         RevenueRecognitionDetails."Grace End Date" := pTenancyContract."Grace End Date";
         RevenueRecognitionDetails."Unit Type" := pTenancyContract."Usage Type";
+        RevenueRecognitionDetails."Item Type" := pRevenueStructure."Secondary Item Type";
         RevenueRecognitionDetails."Description" := 'Regular';
         if pTenancyContract."Praposal Type Selected" = pTenancyContract."Praposal Type Selected"::"Single Unit" then
             RevenueRecognitionDetails."Single Unit Names" := pTenancyContract."Unit Name"
@@ -2141,13 +2158,18 @@ page 50973 "Revenue Recognition Item Sub"
         revenuestructuredetails.SetRange("Secondary Item Type", pRevenueStructure."Secondary Item Type");
         if revenuestructuredetails.FindSet() then begin
             repeat
-                if (revenuestructuredetails."Period Start Date" <= PostingDate) and
-                   (revenuestructuredetails."Period End Date" >= PostingDate) then begin
+                // if (revenuestructuredetails."Period Start Date" <= PostingDate) and
+                //    (revenuestructuredetails."Period End Date" >= PostingDate) then begin
+                if ((revenuestructuredetails."Period Start Date" >= FirstDayOfTargetMonth) and
+      (revenuestructuredetails."Period Start Date" <= LastDayOfTargetMonth)) OR
+       ((revenuestructuredetails."Period End Date" <= LastDayOfTargetMonth) and
+      (revenuestructuredetails."Period End Date" >= FirstDayOfTargetMonth)) OR
+      ((revenuestructuredetails."Period Start Date" <= FirstDayOfTargetMonth) and
+      (revenuestructuredetails."Period End Date" >= LastDayOfTargetMonth)) then begin
                     RevenueRecognitionDetails."Multi Year Start Date" := revenuestructuredetails."Period Start Date";
                     RevenueRecognitionDetails."Multi Year End Date" := revenuestructuredetails."Period End Date";
                     RevenueRecognitionDetails."Annual Amount" := revenuestructuredetails."Final Annual Amount" + revenuestructuredetails."Final Annual Amount" * 5 / 100;
                     RevenueRecognitionDetails."Final Annual Amount" := RevenueRecognitionDetails."Annual Amount";
-                    RevenueRecognitionDetails."Item Type" := revenuestructuredetails."Secondary Item Type";
                 end;
             until revenuestructuredetails.Next() = 0;
         end;
